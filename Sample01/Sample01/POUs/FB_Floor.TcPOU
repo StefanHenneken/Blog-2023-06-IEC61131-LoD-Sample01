@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Floor" Id="{5283b3f7-f5ae-4c20-97af-7f8c264ab6b4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Floor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_aRooms		: ARRAY [1..20] OF FB_Room;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="CalcPowerConsumption" Id="{265595fe-7771-4b20-827c-bb279464e589}">
+      <Declaration><![CDATA[METHOD CalcPowerConsumption : UDINT
+VAR
+	nRoom		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nRoom := 1 TO 20 DO	
+	CalcPowerConsumption := CalcPowerConsumption + refRooms[nRoom].CalcPowerConsumption();
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="refRooms" Id="{7dc87f9e-c7b7-4487-90eb-e7e4b8e931b2}">
+      <Declaration><![CDATA[PROPERTY refRooms : REFERENCE TO ARRAY [1..20] OF FB_Room]]></Declaration>
+      <Get Name="Get" Id="{83b4a601-f8a9-4884-a468-a6c1a54f1f9d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[refRooms REF= THIS^._aRooms;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_Floor">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Floor.CalcPowerConsumption">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Floor.refRooms.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Room" Id="{7fb42700-b5b2-49df-a16f-73b5771ffe74}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Room
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_aLamps		: ARRAY [1..10] OF FB_Lamp;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="CalcPowerConsumption" Id="{b74f6046-ee06-4390-8760-063250eb3c33}">
+      <Declaration><![CDATA[METHOD CalcPowerConsumption : UDINT
+VAR_INPUT
+END_VAR
+VAR
+	nLamp		:	INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR nLamp := 1 TO 10 DO
+	CalcPowerConsumption := CalcPowerConsumption + refLamps[nLamp].nPowerConsumption;
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="refLamps" Id="{6f5673cc-7bb1-4b5f-801c-3bfac429d442}">
+      <Declaration><![CDATA[PROPERTY refLamps : REFERENCE TO ARRAY [1..10] OF FB_Lamp]]></Declaration>
+      <Get Name="Get" Id="{3558468f-ea6a-486d-b0e1-4e3d93742db7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[refLamps REF= THIS^._aLamps;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_Room">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Room.CalcPowerConsumption">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Room.refLamps.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

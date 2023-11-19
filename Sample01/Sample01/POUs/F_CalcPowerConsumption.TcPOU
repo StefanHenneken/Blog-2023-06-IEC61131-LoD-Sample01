@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="F_CalcPowerConsumption" Id="{7bd90b4a-0afc-41fd-afcb-9b8eff234566}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_CalcPowerConsumption : UDINT
+VAR_INPUT
+	refBuilding				: REFERENCE TO FB_Building;
+END_VAR
+VAR
+	nFloor, nRoom, nLamp	: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF (NOT __ISVALIDREF(refBuilding)) THEN
+	F_CalcPowerConsumption := 0;
+	RETURN;
+END_IF
+
+// Violate the Demeter's Law
+//FOR nFloor := 1 TO 5 DO
+//	FOR nRoom := 1 TO 20 DO
+//		FOR nLamp := 1 TO 10 DO
+//			F_CalcPowerConsumption := F_CalcPowerConsumption + refBuilding.refFloors[nFloor].refRooms[nRoom].refLamps[nLamp].nPowerConsumption;
+//		END_FOR
+//	END_FOR
+//END_FOR
+
+// Don't violate the Demeter's Law
+F_CalcPowerConsumption := refBuilding.CalcPowerConsumption();
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_CalcPowerConsumption">
+      <LineId Id="3" Count="15" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
